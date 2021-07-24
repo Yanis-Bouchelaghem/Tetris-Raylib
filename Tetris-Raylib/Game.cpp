@@ -7,6 +7,8 @@ Game::Game(int windowWidth, int windowHeight, std::string title)
 	assert(!IsWindowReady()); //If assertion fails : A window already exists.
 	InitWindow(windowWidth, windowHeight, title.c_str());
 	SetTargetFPS(targetFPS);
+	//////////// Initialize stuff here ////////////
+
 }
 
 Game::~Game()
