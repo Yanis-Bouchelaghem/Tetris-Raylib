@@ -1,18 +1,10 @@
-#include "raylib.h"
+#include "Game.h"
 
 int main(void)
 {
-    InitWindow(1280, 720, "Tetris");
-
-    while (!WindowShouldClose())
+    Game game(800,600,"Tetris");
+    while (!game.GameShouldClose())
     {
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-        EndDrawing();
+        game.Tick();
     }
-
-    CloseWindow();
-
-    return 0;
 }
