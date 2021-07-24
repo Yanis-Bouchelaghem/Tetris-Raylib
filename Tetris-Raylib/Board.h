@@ -10,7 +10,8 @@ class Board
 public:
 	Board(int width, int height);
 	void putBlock(int x, int y, Color c);
-	void removeBlock(int x, int y);
+	void RemoveBlock(int x, int y);
+	void Draw(int posX, int posY) const;
 private:
 	//Represents the state of a block inside of the board
 	class Block
@@ -25,5 +26,7 @@ private:
 	std::vector<Block> content;
 	int width;
 	int height;
+	static constexpr int blockSize = 25;
+	static constexpr int blockPadding = 2;
 	
 };

@@ -3,12 +3,20 @@
 #include "Game.h"
 
 Game::Game(int windowWidth, int windowHeight, std::string title)
+	:
+	board(10,20)
 {
 	assert(!IsWindowReady()); //If assertion fails : A window already exists.
 	InitWindow(windowWidth, windowHeight, title.c_str());
 	SetTargetFPS(targetFPS);
 	//////////// Initialize stuff here ////////////
-
+	for (int x = 0; x < 10; ++x)
+	{
+		for (int y = 0; y < 20; ++y)
+		{
+			board.putBlock(x, y, RED);
+		}
+	}
 }
 
 Game::~Game()
@@ -34,10 +42,12 @@ void Game::Tick()
 //Game logic goes here
 void Game::Update()	
 {
+
 }
 
 //Game rendering goes here
 void Game::Render() 
 {
 	ClearBackground(BLACK);
+	board.Draw(50,50);
 }
