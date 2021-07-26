@@ -29,13 +29,13 @@ void Board::RemoveBlock(int x, int y)
 //Draws the whole board at the given position (the given position is the top-left of the board)
 void Board::Draw(int posX, int posY) const
 {
-	for (int x = 0; x < width; ++x)
+	for (int y = 0; y < height; ++y)
 	{
-		for (int y = 0; y < height; ++y)
+		for (int x = 0; x < width; ++x)
 		{
 			Block block = content[y * width + x];
-			DrawRectangle((posX + x * blockSize) + blockPadding,
-						  (posY + y * blockSize) + blockPadding,
+			Vec2<int> sceenPos = {posX + x * blockSize, posY +  y * blockSize};
+			rayCpp::DrawRectangle(sceenPos + blockPadding,
 						  blockSize - blockPadding,
 						  blockSize - blockPadding,
 						  block.color);

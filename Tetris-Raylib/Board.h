@@ -1,8 +1,7 @@
-#pragma once
-//#pragma warning(push, 0)      
-#include <raylib.h>
-//#pragma warning(pop)
+#pragma once  
 #include <vector>
+#include "RaylibCpp.h"
+#include "Vec2.h"
 
 //Represents the game board
 class Board

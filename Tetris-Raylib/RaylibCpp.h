@@ -4,6 +4,9 @@
 #pragma warning(pop)
 #include "Vec2.h"
 
+namespace rayCpp 
+{
+	void DrawRectangle(Vec2<int> pos, int width, int height, Color color);
+}
 
-void DrawRectangle(Vec2<int> pos, int width, int height, Color color);
 
