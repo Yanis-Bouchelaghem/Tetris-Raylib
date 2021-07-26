@@ -29,6 +29,11 @@ void Board::RemoveBlock(int x, int y)
 //Draws the whole board at the given position (the given position is the top-left of the board)
 void Board::Draw(int posX, int posY) const
 {
+	DrawRectangleLinesEx({float(posX - blockSize/2),float(posY - blockSize/2),
+						  float((width+1) * blockSize), float((height+1) * blockSize)},
+						  blockSize/2,
+						  borderColor);
+
 	for (int y = 0; y < height; ++y)
 	{
 		for (int x = 0; x < width; ++x)

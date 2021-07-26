@@ -27,5 +27,6 @@ private:
 	int height;
 	static constexpr int blockSize = 25;
 	static constexpr int blockPadding = 2;
+	static constexpr Color borderColor = WHITE;
 	
 };
