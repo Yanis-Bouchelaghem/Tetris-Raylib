@@ -15,10 +15,10 @@ public:
 		:
 		Rect(topleft.GetX(),topleft.GetY(), width_height.GetX(), width_height.GetY())
 	{}
-	T getX() {return x;}
-	T getY() {return y;}
-	T getWidth() {return width;}
-	T getheight() {return height;}
+	T getX() const {return x;}
+	T getY() const {return y;}
+	T getWidth() const {return width;}
+	T getheight() const {return height;}
 private:
 	T x;
 	T y;

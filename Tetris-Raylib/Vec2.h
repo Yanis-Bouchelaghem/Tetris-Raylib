@@ -9,8 +9,8 @@ public:
 	y(_y)
 	{}
 
-	T GetX(){return x;}
-	T GetY(){return y;}
+	T GetX() const {return x;}
+	T GetY() const {return y;}
 	void SetX(T _x){x = _x;}
 	void SetY(T _y){y = _y;}
 
