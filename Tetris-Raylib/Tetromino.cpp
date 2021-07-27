@@ -1,9 +1,10 @@
 #include "Tetromino.h"
 
-Tetromino::Tetromino(int dimension, Color color)
+Tetromino::Tetromino(int dimension, Color color, const bool* _shape)
 	:
 	color(color),
-	dimension(dimension)
+	dimension(dimension),
+	shape(_shape,_shape + dimension*dimension)
 {
 }
 
@@ -35,70 +36,35 @@ void Tetromino::RotateLeft()
 
 Square::Square(Color color)
 	:
-	Tetromino(squareDimension,color)
-{
-	for (const bool block : square)
-	{
-		shape.emplace_back(block);
-	}
-}
+	Tetromino(squareDimension,color, square)
+{}
 
 Jay::Jay(Color color)
 	:
-	Tetromino(jayDimension,color)
-{
-	for (const bool block : jay)
-	{
-		shape.emplace_back(block);
-	}
-}
+	Tetromino(jayDimension,color, jay)
+{}
 
 Elle::Elle(Color color)
 	:
-	Tetromino(elleDimension, color)
-{
-	for (const bool block : elle)
-	{
-		shape.emplace_back(block);
-	}
-}
+	Tetromino(elleDimension, color, elle)
+{}
 
 Ess::Ess(Color color)
 	:
-	Tetromino(essDimension, color)
-{
-	for (const bool block : ess)
-	{
-		shape.emplace_back(block);
-	}
-}
+	Tetromino(essDimension, color, ess)
+{}
 
 Zed::Zed(Color color)
 	:
-	Tetromino(zedDimension, color)
-{
-	for (const bool block : zed)
-	{
-		shape.emplace_back(block);
-	}
-}
+	Tetromino(zedDimension, color, zed)
+{}
 
 Tee::Tee(Color color)
 	:
-	Tetromino(teeDimension, color)
-{
-	for (const bool block : tee)
-	{
-		shape.emplace_back(block);
-	}
-}
+	Tetromino(teeDimension, color, tee)
+{}
 
 Straight::Straight(Color color)
 	:
-	Tetromino(straightDimension, color)
-{
-	for (const bool block : straight)
-	{
-		shape.emplace_back(block);
-	}
-}
+	Tetromino(straightDimension, color, straight)
+{}

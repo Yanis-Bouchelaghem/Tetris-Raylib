@@ -5,11 +5,11 @@
 class Tetromino
 {
 public:
-	Tetromino(int dimension, Color color);
 	void RotateRight();
 	void RotateLeft();
 	virtual ~Tetromino() noexcept = default;
 protected:
+	Tetromino(int dimension, Color color, const bool* _shape);
 	std::vector<bool> shape;
 private:
 	const int dimension;
