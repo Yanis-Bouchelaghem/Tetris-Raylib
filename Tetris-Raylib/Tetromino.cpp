@@ -37,18 +37,68 @@ Square::Square(Color color)
 	:
 	Tetromino(squareDimension,color)
 {
-	for (bool b : square)
+	for (const bool block : square)
 	{
-		shape.emplace_back(b);
+		shape.emplace_back(block);
 	}
 }
 
 Jay::Jay(Color color)
 	:
-	Tetromino(JayDimension,color)
+	Tetromino(jayDimension,color)
 {
-	for (bool b : jay)
+	for (const bool block : jay)
 	{
-		shape.emplace_back(b);
+		shape.emplace_back(block);
+	}
+}
+
+Elle::Elle(Color color)
+	:
+	Tetromino(elleDimension, color)
+{
+	for (const bool block : elle)
+	{
+		shape.emplace_back(block);
+	}
+}
+
+Ess::Ess(Color color)
+	:
+	Tetromino(essDimension, color)
+{
+	for (const bool block : ess)
+	{
+		shape.emplace_back(block);
+	}
+}
+
+Zed::Zed(Color color)
+	:
+	Tetromino(zedDimension, color)
+{
+	for (const bool block : zed)
+	{
+		shape.emplace_back(block);
+	}
+}
+
+Tee::Tee(Color color)
+	:
+	Tetromino(teeDimension, color)
+{
+	for (const bool block : tee)
+	{
+		shape.emplace_back(block);
+	}
+}
+
+Straight::Straight(Color color)
+	:
+	Tetromino(straightDimension, color)
+{
+	for (const bool block : straight)
+	{
+		shape.emplace_back(block);
 	}
 }
