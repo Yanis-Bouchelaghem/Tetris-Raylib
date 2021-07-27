@@ -5,13 +5,25 @@
 class Tetromino
 {
 public:
-	Tetromino(int _dimension,Color color);
+	Tetromino(int dimension,Color color);
 
-	virtual void RotateLeft() = 0;
-	virtual void RotateRight() = 0;
+	void RotateLeft();
+	void RotateRight();
 	virtual ~Tetromino() noexcept = default;
 
 protected:
 	std::vector<bool> shape;
+	int dimension;
 	Color color;
+};
+
+class Square : public Tetromino
+{
+public:
+	Square(Color color);
+
+public:
+	static constexpr int squareDimension = 2;
+	static constexpr bool square[squareDimension*2] = { 1,1,
+													    1,1 };
 };
