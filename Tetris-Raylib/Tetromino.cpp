@@ -8,7 +8,7 @@ Tetromino::Tetromino(int dimension, Color color, const bool* _shape)
 {
 }
 
-void Tetromino::RotateRight()
+void Tetromino::RotateLeft()
 {
 	std::vector<bool> copy = shape;
 	for (int y = 0; y < dimension; ++y)
@@ -21,7 +21,7 @@ void Tetromino::RotateRight()
 	}
 }
 
-void Tetromino::RotateLeft()
+void Tetromino::RotateRight()
 {
 	std::vector<bool> copy = shape;
 	for (int y = 0; y < dimension; ++y)

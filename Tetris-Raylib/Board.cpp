@@ -7,10 +7,11 @@ Board::Board(int _width, int _height)
 	:
 	width(_width),
 	height(_height),
-	activeTetromino(std::make_unique<Straight>(BLUE)),
+	activeTetromino(std::make_unique<Zed>(BLUE)),
 	tetrominoPos(_width/2 - activeTetromino->GetDimension()/2, 0)
 {
 	content.resize(size_t(width*height));
+	activeTetromino->RotateLeft();
 }
 
 void Board::putBlock(int x, int y, Color c)
