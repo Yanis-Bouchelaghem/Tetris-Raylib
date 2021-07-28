@@ -34,6 +34,33 @@ void Tetromino::RotateLeft()
 	}
 }
 
+int Tetromino::GetDimension() const
+{
+	return dimension;
+}
+
+//Draws the tetromino at the given screenPos with the given block size and padding.
+void Tetromino::Draw(const Vec2<int> screenPos, const int blockSize, const int blockPadding) const
+{
+	for (int y = 0; y < dimension; ++y)
+	{
+		for (int x = 0; x < dimension; ++x)
+		{
+			if (shape[y * dimension + x])
+			{
+				//Figure out the coordinates of the block 
+				Vec2<int> blockTopLeft{x* blockSize, y* blockSize};
+				//Add the screen position and the padding to it
+				blockTopLeft += screenPos + blockPadding;
+
+				rayCpp::DrawRectangle(blockTopLeft,
+									  Vec2<int>{blockSize,blockSize} - blockPadding,
+									  color);
+			}
+		}
+	}
+}
+
 Square::Square(Color color)
 	:
 	Tetromino(squareDimension,color, square)

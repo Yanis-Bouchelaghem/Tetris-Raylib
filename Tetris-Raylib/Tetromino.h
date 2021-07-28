@@ -1,12 +1,15 @@
 #pragma once
 #include <vector>
 #include "RaylibCpp.h"
+#include "Vec2.h"
 
 class Tetromino
 {
 public:
 	void RotateRight();
 	void RotateLeft();
+	int GetDimension() const;
+	void Draw(const Vec2<int> screenPos, const int blockSize, const int blockPadding) const;
 	virtual ~Tetromino() noexcept = default;
 protected:
 	Tetromino(int dimension, Color color, const bool* _shape);

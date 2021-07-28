@@ -6,7 +6,9 @@
 Board::Board(int _width, int _height)
 	:
 	width(_width),
-	height(_height)
+	height(_height),
+	activeTetromino(std::make_unique<Straight>(BLUE)),
+	tetrominoPos(_width/2 - activeTetromino->GetDimension()/2, 0)
 {
 	content.resize(size_t(width*height));
 }
@@ -28,28 +30,35 @@ void Board::RemoveBlock(int x, int y)
 }
 
 //Draws the whole board at the given position (the given position is the top-left of the board)
-void Board::Draw(int posX, int posY) const
+void Board::Draw(Vec2<int> screenPos) const
 {
 	//Draw the border of the board
-	Vec2<int> borderTopLeft(posX - blockSize/2, posY - blockSize/2);
+	Vec2<int> borderTopLeft(screenPos.GetX() - blockSize / 2, screenPos.GetY() - blockSize / 2);
 	Vec2<int> borderWidthHeight((width + 1) * blockSize, (height + 1) * blockSize);
 	rayCpp::DrawRectangleLinesEx(Rect<int>(borderTopLeft, borderWidthHeight),
-								 blockSize/2,
-								 borderColor);
-	
+		blockSize / 2,
+		borderColor);
+
 	//Draw the content of the board
 	for (int y = 0; y < height; ++y)
 	{
 		for (int x = 0; x < width; ++x)
 		{
 			Block block = content[y * width + x];
-			Vec2<int> sceenPos(posX + x * blockSize, posY +  y * blockSize);
-			rayCpp::DrawRectangle(sceenPos + blockPadding,
-						  blockSize - blockPadding,
-						  blockSize - blockPadding,
-						  block.color);
+			Vec2<int> sceenscreenPos(screenPos.GetX() + x * blockSize, screenPos.GetY() + y * blockSize);
+			rayCpp::DrawRectangle(sceenscreenPos + blockPadding,
+				Vec2<int>{blockSize,blockSize} - blockPadding,
+				block.color);
 		}
 	}
+
+	//Draw the active tetromino
+	activeTetromino->Draw(screenPos + (tetrominoPos * blockSize), blockSize, blockPadding);
+}
+
+void Board::Draw(int posX, int posY) const
+{
+	Draw({ posX,posY });
 }
 
 void Board::Block::putColor(Color c)

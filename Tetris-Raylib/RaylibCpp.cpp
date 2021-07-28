@@ -1,8 +1,8 @@
 #include "RaylibCpp.h"
 
-void rayCpp::DrawRectangle(Vec2<int> pos, int width, int height, Color color)
+void rayCpp::DrawRectangle(Vec2<int> pos,Vec2<int> widthHeight, Color color)
 {
-	DrawRectangle(pos.GetX(), pos.GetY(), width, height, color);
+	DrawRectangle(pos.GetX(), pos.GetY(), widthHeight.GetX(), widthHeight.GetY(), color);
 }
 
 void rayCpp::DrawRectangleLinesEx(Rect<int> rect, int lineThick, Color color)

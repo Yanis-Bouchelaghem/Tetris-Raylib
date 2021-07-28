@@ -49,5 +49,5 @@ void Game::Update()
 void Game::Render() 
 {
 	ClearBackground(BLACK);
-	board.Draw(150,50);
+	board.Draw({150,50});
 }
