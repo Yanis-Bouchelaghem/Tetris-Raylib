@@ -8,6 +8,8 @@ class Tetromino
 public:
 	void RotateRight();
 	void RotateLeft();
+	const std::vector<bool> GetRotatedLeft() const;
+	const std::vector<bool> GetRotatedRight() const;
 	int GetDimension() const;
 	const std::vector<bool>& GetCurrentShape() const;
 	void Draw(const Vec2<int> screenPos, const int blockSize, const int blockPadding) const;

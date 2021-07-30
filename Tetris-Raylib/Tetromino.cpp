@@ -8,30 +8,42 @@ Tetromino::Tetromino(int dimension, Color color, const bool* _shape)
 {
 }
 
-void Tetromino::RotateLeft()
+const std::vector<bool> Tetromino::GetRotatedLeft() const
 {
-	std::vector<bool> copy = shape;
-	for (int y = 0; y < dimension; ++y)
-	{
-		for (int x = 0; x < dimension; ++x)
-		{
-			//Algorithm to rotate a square array 90° clockwise (width-1 + x*width -y)
-			shape[dimension-1 + x*dimension - y] = copy[y*dimension + x];
-		}
-	}
-}
-
-void Tetromino::RotateRight()
-{
-	std::vector<bool> copy = shape;
+	std::vector<bool> copy(shape.size());
 	for (int y = 0; y < dimension; ++y)
 	{
 		for (int x = 0; x < dimension; ++x)
 		{
 			//Algorithm to rotate a square array 90° counter-clockwise ( (width * (width-1)) - (x * width) - y )
-			shape[dimension * (dimension-1) - (x * dimension) + y] = copy[y * dimension + x];
+			copy[dimension * (dimension - 1) - (x * dimension) + y] = shape[y * dimension + x];
 		}
 	}
+	return copy;
+}
+
+const std::vector<bool> Tetromino::GetRotatedRight() const
+{
+	std::vector<bool> copy(shape.size());
+	for (int y = 0; y < dimension; ++y)
+	{
+		for (int x = 0; x < dimension; ++x)
+		{
+			//Algorithm to rotate a square array 90° clockwise (width-1 + x*width -y)
+			copy[dimension - 1 + x * dimension - y] = shape[y * dimension + x];
+		}
+	}
+	return copy;
+}
+
+void Tetromino::RotateRight()
+{
+	shape = GetRotatedRight();
+}
+
+void Tetromino::RotateLeft()
+{
+	shape = GetRotatedLeft();
 }
 
 int Tetromino::GetDimension() const

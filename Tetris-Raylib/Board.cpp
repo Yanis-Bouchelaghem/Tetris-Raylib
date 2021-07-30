@@ -47,12 +47,20 @@ void Board::RemoveBlock(int x, int y)
 
 void Board::RotateTetrominoLeft()
 {
-	activeTetromino->RotateLeft();
+	if (IsPositionValid(tetrominoPos, activeTetromino->GetRotatedLeft(), activeTetromino->GetDimension()))
+	{
+		activeTetromino->RotateLeft();
+	}
+
 }
 
 void Board::RotateTetrominoRight()
 {
-	activeTetromino->RotateRight();
+	if (IsPositionValid(tetrominoPos, activeTetromino->GetRotatedRight(), activeTetromino->GetDimension()))
+	{
+		activeTetromino->RotateRight();
+	}
+
 }
 
 //Checks if the given position is in bounds (TODO : make it check if the position doesn't contain a block either)
@@ -74,6 +82,7 @@ bool Board::IsPositionValid(const Vec2<int>& pos, const std::vector<bool>& shape
 			}
 		}
 	}
+	return true;
 }
 
 //Moves the tetromino by a delta but only if the move is possible
