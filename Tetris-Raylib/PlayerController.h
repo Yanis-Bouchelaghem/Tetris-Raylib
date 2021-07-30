@@ -1,5 +1,5 @@
 #pragma once
-#include <unordered_map>
+#include <map>
 #include <functional>
 
 enum KeyState
@@ -31,11 +31,11 @@ private:
 		Context context;
 		KeyState keyState;
 	public:
-		size_t operator()(const Requirement& requirement) const;
-		bool operator==(const Requirement& rhs) const;
+		//size_t operator()(const Requirement& requirement) const;
+		bool operator<(const Requirement& rhs) const;
 	};
 private:
-	std::unordered_map<Requirement,std::function<void(float dt)>,Requirement> callbacks;
+	std::map<Requirement,std::function<void(float dt)>> callbacks;
 };
 
 //Make the only 
