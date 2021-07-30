@@ -55,10 +55,35 @@ void Board::RotateTetrominoRight()
 	activeTetromino->RotateRight();
 }
 
+//Checks if the given position is in bounds (TODO : make it check if the position doesn't contain a block either)
+bool Board::IsBlockAvailable(const Vec2<int>& pos) const
+{
+	return (pos.GetX() >= 0 && pos.GetX() < width && pos.GetY() >= 0 && pos.GetY() < height);
+}
+
+//Checks if the given shape fits in the given position without overlapping a wall or existing blocks
+bool Board::IsPositionValid(const Vec2<int>& pos, const std::vector<bool>& shape, int dimension) const
+{
+	for (int y = 0; y < dimension; ++y)
+	{
+		for (int x = 0; x < dimension; ++x)
+		{
+			if (shape[y * dimension + x] && !IsBlockAvailable(pos + Vec2<int>{x,y}))
+			{
+				return false;
+			}
+		}
+	}
+}
+
+//Moves the tetromino by a delta but only if the move is possible
 void Board::MoveTetromino(const Vec2<int> delta)
 {
-
-	tetrominoPos += delta;
+	Vec2<int> newPos = tetrominoPos + delta;
+	if (IsPositionValid(newPos, activeTetromino->GetCurrentShape(), activeTetromino->GetDimension()))
+	{
+		tetrominoPos += delta;
+	}
 }
 
 //Draws the whole board at the given position (the given position is the top-left of the board)

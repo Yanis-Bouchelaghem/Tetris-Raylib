@@ -39,6 +39,11 @@ int Tetromino::GetDimension() const
 	return dimension;
 }
 
+const std::vector<bool>& Tetromino::GetCurrentShape() const
+{
+	return shape;
+}
+
 //Draws the tetromino at the given screenPos with the given block size and padding.
 void Tetromino::Draw(const Vec2<int> screenPos, const int blockSize, const int blockPadding) const
 {

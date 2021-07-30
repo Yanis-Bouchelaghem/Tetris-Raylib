@@ -9,6 +9,7 @@ public:
 	void RotateRight();
 	void RotateLeft();
 	int GetDimension() const;
+	const std::vector<bool>& GetCurrentShape() const;
 	void Draw(const Vec2<int> screenPos, const int blockSize, const int blockPadding) const;
 	virtual ~Tetromino() noexcept = default;
 protected:
