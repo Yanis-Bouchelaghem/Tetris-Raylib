@@ -14,6 +14,7 @@ public:
 	void RemoveBlock(int x, int y);
 	void RotateTetrominoLeft();
 	void RotateTetrominoRight();
+	void MoveTetromino(const Vec2<int> delta);
 	void Draw(Vec2<int> pos) const;
 	void Draw(int posX, int posY) const;
 

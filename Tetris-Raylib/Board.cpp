@@ -15,13 +15,17 @@ Board::Board(int _width, int _height)
 	activeTetromino->RotateLeft();
 
 	//Bind the player controls
-	playerController.Bind(KEY_LEFT,Context::running,KeyState::isKeyPressed,
-		[=](float dt){
-			RotateTetrominoRight();
+	playerController.Bind(KEY_E,Context::running,KeyState::isKeyPressed,[=](float dt){
+		RotateTetrominoRight();
 	});
-	playerController.Bind(KEY_RIGHT,Context::running, KeyState::isKeyPressed,
-		[=](float dt){
-			RotateTetrominoLeft();
+	playerController.Bind(KEY_Q,Context::running, KeyState::isKeyPressed,[=](float dt){
+		RotateTetrominoLeft();
+	});
+	playerController.Bind(KEY_LEFT,Context::running, KeyState::isKeyPressed,[=](float dt){
+		MoveTetromino({-1,0});
+	});
+	playerController.Bind(KEY_RIGHT,Context::running,KeyState::isKeyPressed,[=](float dt) {
+		MoveTetromino({ 1,0 });
 	});
 }
 
@@ -49,6 +53,12 @@ void Board::RotateTetrominoLeft()
 void Board::RotateTetrominoRight()
 {
 	activeTetromino->RotateRight();
+}
+
+void Board::MoveTetromino(const Vec2<int> delta)
+{
+
+	tetrominoPos += delta;
 }
 
 //Draws the whole board at the given position (the given position is the top-left of the board)
