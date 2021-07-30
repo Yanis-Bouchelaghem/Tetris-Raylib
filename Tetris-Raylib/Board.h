@@ -12,6 +12,8 @@ public:
 	Board(int width, int height);
 	void putBlock(int x, int y, Color c);
 	void RemoveBlock(int x, int y);
+	void RotateTetrominoLeft();
+	void RotateTetrominoRight();
 	void Draw(Vec2<int> pos) const;
 	void Draw(int posX, int posY) const;
 

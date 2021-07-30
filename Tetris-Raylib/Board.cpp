@@ -1,7 +1,7 @@
 #include <assert.h>
 #include "Board.h"
 #include "Rect.h"
-
+#include "PlayerController.h"
 //Creates a board with width * height blocks
 Board::Board(int _width, int _height)
 	:
@@ -13,6 +13,14 @@ Board::Board(int _width, int _height)
 	assert(_width > 0 && _height > 0); //If assertion fails : width or height is negative
 	content.resize(size_t(width*height));
 	activeTetromino->RotateLeft();
+
+	//Bind the player controls
+	playerController.Bind(KEY_LEFT,[this](){
+		RotateTetrominoRight();
+	});
+	playerController.Bind(KEY_RIGHT,[this](){
+		RotateTetrominoLeft();
+	});
 }
 
 void Board::putBlock(int x, int y, Color c)
@@ -29,6 +37,16 @@ void Board::RemoveBlock(int x, int y)
 	assert(y >= 0 && y < height);
 
 	content[size_t(y * width + x)].bExists = false;
+}
+
+void Board::RotateTetrominoLeft()
+{
+	activeTetromino->RotateLeft();
+}
+
+void Board::RotateTetrominoRight()
+{
+	activeTetromino->RotateRight();
 }
 
 //Draws the whole board at the given position (the given position is the top-left of the board)

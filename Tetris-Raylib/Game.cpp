@@ -1,6 +1,7 @@
 #include <assert.h>
 #include "RaylibCpp.h"
 #include "Game.h"
+#include "PlayerController.h"
 
 Game::Game(int windowWidth, int windowHeight, std::string title)
 	:
@@ -42,6 +43,7 @@ void Game::Tick()
 //Game logic goes here
 void Game::Update()	
 {
+	playerController.DispatchInput();
 
 }
 
