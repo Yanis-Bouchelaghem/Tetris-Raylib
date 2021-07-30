@@ -2,21 +2,21 @@
 #include <map>
 #include <functional>
 
-enum KeyState
+enum class KeyState
 {
 	isKeyPressed,
 	isKeyDown,
 	isKeyReleased,
 	isKeyUp
 };
-enum Context
+enum class Context
 {
 	running,
 	pause,
 	gameOver
 };
 
-//A global player controller
+//A global player controller, keys can be bound to callback functions depending on a state
 class PlayerController
 {
 public:
@@ -24,19 +24,18 @@ public:
 	void HandleInput(Context context) const;
 
 private:
-	class Requirement
+	struct Requirement
 	{
-	public:
 		int key;
 		Context context;
 		KeyState keyState;
-	public:
-		//size_t operator()(const Requirement& requirement) const;
+
 		bool operator<(const Requirement& rhs) const;
 	};
 private:
 	std::map<Requirement,std::function<void(float dt)>> callbacks;
 };
 
-//Make the only 
+//Declaring the controller as extern here and instanciating it in the .cpp file
+//Anyone who includes this header will be able to bind controls using playerController
 extern PlayerController playerController;
