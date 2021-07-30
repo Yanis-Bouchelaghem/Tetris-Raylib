@@ -15,11 +15,13 @@ Board::Board(int _width, int _height)
 	activeTetromino->RotateLeft();
 
 	//Bind the player controls
-	playerController.Bind(KEY_LEFT,[this](){
-		RotateTetrominoRight();
+	playerController.Bind(KEY_LEFT,Context::running,KeyState::isKeyPressed,
+		[=](float dt){
+			RotateTetrominoRight();
 	});
-	playerController.Bind(KEY_RIGHT,[this](){
-		RotateTetrominoLeft();
+	playerController.Bind(KEY_RIGHT,Context::running, KeyState::isKeyPressed,
+		[=](float dt){
+			RotateTetrominoLeft();
 	});
 }
 

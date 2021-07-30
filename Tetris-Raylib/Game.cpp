@@ -43,7 +43,7 @@ void Game::Tick()
 //Game logic goes here
 void Game::Update()	
 {
-	playerController.DispatchInput();
+	playerController.HandleInput(Context::running);
 
 }
 

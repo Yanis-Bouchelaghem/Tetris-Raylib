@@ -1,13 +1,42 @@
 #pragma once
 #include <unordered_map>
 #include <functional>
+
+enum KeyState
+{
+	isKeyPressed,
+	isKeyDown,
+	isKeyReleased,
+	isKeyUp
+};
+enum Context
+{
+	running,
+	pause,
+	gameOver
+};
+
+//A global player controller
 class PlayerController
 {
 public:
-	void Bind(int key, std::function<void()> func);
-	void DispatchInput() const;
+	void Bind(int key, Context context, KeyState state, std::function<void(float dt)> func);
+	void HandleInput(Context context) const;
+
 private:
-	std::unordered_map<int,std::function<void()>> callbacks;
+	class Requirement
+	{
+	public:
+		int key;
+		Context context;
+		KeyState keyState;
+	public:
+		size_t operator()(const Requirement& requirement) const;
+		bool operator==(const Requirement& rhs) const;
+	};
+private:
+	std::unordered_map<Requirement,std::function<void(float dt)>,Requirement> callbacks;
 };
 
+//Make the only 
 extern PlayerController playerController;
