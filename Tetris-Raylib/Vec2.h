@@ -1,4 +1,5 @@
 #pragma once
+//A vector class to hold a pair of a type, also overloaded with a bunch of useful operators
 template <typename T>
 class Vec2
 {

@@ -10,6 +10,7 @@ Board::Board(int _width, int _height)
 	activeTetromino(std::make_unique<Zed>(BLUE)),
 	tetrominoPos(_width/2 - activeTetromino->GetDimension()/2, 0)
 {
+	assert(_width > 0 && _height > 0); //If assertion fails : width or height is negative
 	content.resize(size_t(width*height));
 	activeTetromino->RotateLeft();
 }

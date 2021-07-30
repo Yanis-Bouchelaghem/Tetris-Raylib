@@ -28,8 +28,8 @@ private:
 private:
 	std::vector<Block> content;
 	std::unique_ptr<Tetromino> activeTetromino;
-	int width;
-	int height;
+	const int width;
+	const int height;
 	Vec2<int> tetrominoPos;
 
 	static constexpr int blockSize = 25;
