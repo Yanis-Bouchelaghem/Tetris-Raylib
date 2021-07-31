@@ -10,14 +10,7 @@ Game::Game(int windowWidth, int windowHeight, std::string title)
 	assert(!IsWindowReady()); //If assertion fails : A window already exists.
 	InitWindow(windowWidth, windowHeight, title.c_str());
 	SetTargetFPS(targetFPS);
-	//////////// Initialize stuff here ////////////
-	/*for (int x = 0; x < 10; ++x)
-	{
-		for (int y = 0; y < 20; ++y)
-		{
-			board.putBlock(x, y, RED);
-		}
-	}*/
+
 	board.putBlock(7,3,RED);
 }
 
@@ -44,8 +37,16 @@ void Game::Tick()
 //Game logic goes here
 void Game::Update()	
 {
-	playerController.HandleInput(Context::running);
+	const float dt = GetFrameTime();
+	playerController.HandleInput(Context::running, dt);
 
+	timer -= dt;
+	if (timer <= 0.0f)
+	{
+		//Move the tetromino down
+		board.MoveTetromino({0,1});
+		timer = delay;
+	}
 }
 
 //Game rendering goes here

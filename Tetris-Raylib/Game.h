@@ -17,4 +17,13 @@ private:
 private:
 	/////////// Member variables go here ///////////
 	Board board;
+
+	//The time it takes for the piece to move down (in seconds)
+	float delay = 1.0f;
+	float timer = delay;
+	//The amount by which the delay is reduced every tetromino landing (in seconds)
+	static constexpr float drain = 0.01f;
+	//The minimum delay possible (in seconds, making it too low may render the game too hard after a while)
+	static constexpr float minDelay = 0.2f;
+
 };

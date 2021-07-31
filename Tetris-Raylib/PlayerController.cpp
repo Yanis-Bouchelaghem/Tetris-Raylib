@@ -9,9 +9,8 @@ void PlayerController::Bind(int key, Context context, KeyState state, std::funct
 	callbacks.emplace(Requirement{ key,context,state },func);
 }
 
-void PlayerController::HandleInput(Context context) const
+void PlayerController::HandleInput(Context context, float dt) const
 {
-	const float dt = GetFrameTime();
 	for (auto& pair : callbacks)
 	{
 		Requirement requirement = pair.first;

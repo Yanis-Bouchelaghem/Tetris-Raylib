@@ -21,7 +21,7 @@ class PlayerController
 {
 public:
 	void Bind(int key, Context context, KeyState state, std::function<void(float dt)> func);
-	void HandleInput(Context context) const;
+	void HandleInput(Context context, float dt) const;
 
 private:
 	struct Requirement

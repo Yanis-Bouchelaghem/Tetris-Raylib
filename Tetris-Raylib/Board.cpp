@@ -89,7 +89,8 @@ bool Board::IsWithinBoard(const Vec2<int>& pos, const std::vector<bool>& shape, 
 	{
 		for (int x = 0; x < dimension; ++x)
 		{
-			if (shape[y * dimension + x] && (pos.GetX() + x < 0 || pos.GetX() + x >= width))
+			if (shape[y * dimension + x] &&
+			(pos.GetX() + x < 0 || pos.GetX() + x >= width || pos.GetY() + y < 0 || pos.GetY() + y >= height))
 			{
 				return false;
 			}
@@ -171,14 +172,16 @@ bool Board::IsPositionValid(const Vec2<int>& pos, const std::vector<bool>& shape
 	return false;
 }
 
-//Moves the tetromino by a delta but only if the move is possible
-void Board::MoveTetromino(const Vec2<int> delta)
+//Moves the tetromino by a delta but only if the move is possible (returns true if moved, false otherwise)
+bool Board::MoveTetromino(const Vec2<int> delta)
 {
 	Vec2<int> newPos = tetrominoPos + delta;
 	if (IsPositionValid(newPos, activeTetromino->GetCurrentShape(), activeTetromino->GetDimension()))
 	{
 		tetrominoPos += delta;
+		return true;
 	}
+	return false;
 }
 
 //Draws the whole board at the given position (the given position is the top-left of the board)
