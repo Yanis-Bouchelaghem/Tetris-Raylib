@@ -8,26 +8,11 @@ Board::Board(int _width, int _height)
 	:
 	width(_width),
 	height(_height),
-	activeTetromino(std::make_unique<Straight>()),
+	activeTetromino(Tetromino::RandomTetromino()),
 	tetrominoPos(_width/2 - activeTetromino->GetDimension()/2, 0)
 {
 	assert(_width > 0 && _height > 0); //If assertion fails : width or height is negative
 	content.resize(size_t(width*height));
-	activeTetromino->RotateLeft();
-
-	//Bind the player controls
-	playerController.Bind(KEY_E,Context::running,KeyState::isKeyPressed,[=](float dt){
-		RotateTetrominoRight();
-	});
-	playerController.Bind(KEY_Q,Context::running, KeyState::isKeyPressed,[=](float dt){
-		RotateTetrominoLeft();
-	});
-	playerController.Bind(KEY_LEFT,Context::running, KeyState::isKeyPressed,[=](float dt){
-		MoveTetromino({-1,0});
-	});
-	playerController.Bind(KEY_RIGHT,Context::running,KeyState::isKeyPressed,[=](float dt) {
-		MoveTetromino({ 1,0 });
-	});
 }
 
 void Board::putBlock(int x, int y, Color c)
