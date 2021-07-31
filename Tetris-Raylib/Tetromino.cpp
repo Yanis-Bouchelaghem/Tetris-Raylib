@@ -90,6 +90,37 @@ void Tetromino::Draw(const Vec2<int> screenPos, const int blockSize, const int b
 	}
 }
 
+//Returns a random tetromino
+std::unique_ptr<Tetromino> Tetromino::RandomTetromino()
+{
+	std::unique_ptr<Tetromino> tetromino;
+	switch (GetRandomValue(0, 6))
+	{
+		case 0:
+			tetromino = std::make_unique<Square>();
+			break;
+		case 1:
+			tetromino = std::make_unique<Jay>();
+			break;
+		case 2:
+			tetromino = std::make_unique<Elle>();
+			break;
+		case 3:
+			tetromino = std::make_unique<Ess>();
+			break;
+		case 4:
+			tetromino = std::make_unique<Zed>();
+			break;
+		case 5:
+			tetromino = std::make_unique<Tee>();
+			break;
+		case 6:
+			tetromino = std::make_unique<Straight>();
+			break;
+	}
+	return std::move(tetromino);
+}
+
 Square::Square()
 	:
 	Tetromino(squareDimension,color, square)

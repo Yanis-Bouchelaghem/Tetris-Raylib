@@ -95,7 +95,9 @@ void Board::PutTetromino()
 void Board::NextTetromino()
 {
 	//TODO : Generate new shape
-	tetrominoPos = { width / 2,0 };
+	activeTetromino = Tetromino::RandomTetromino();
+
+	tetrominoPos = { width / 2 - activeTetromino->GetDimension() / 2,0 };
 }
 
 //Checks if the given shape fits in the given position without overlapping a wall
