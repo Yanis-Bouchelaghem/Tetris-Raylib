@@ -11,13 +11,14 @@ Game::Game(int windowWidth, int windowHeight, std::string title)
 	InitWindow(windowWidth, windowHeight, title.c_str());
 	SetTargetFPS(targetFPS);
 	//////////// Initialize stuff here ////////////
-	for (int x = 0; x < 10; ++x)
+	/*for (int x = 0; x < 10; ++x)
 	{
 		for (int y = 0; y < 20; ++y)
 		{
 			board.putBlock(x, y, RED);
 		}
-	}
+	}*/
+	board.putBlock(7,3,RED);
 }
 
 Game::~Game()

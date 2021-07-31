@@ -52,9 +52,13 @@ void Board::RotateTetrominoLeft()
 	int leftWallBump = CollideLeftWall(tetrominoPos,rotated, activeTetromino->GetDimension());
 	int rightWallBump = CollideRightWall(tetrominoPos, rotated, activeTetromino->GetDimension());
 
-	tetrominoPos += Vec2<int>{leftWallBump - rightWallBump, 0};
-
-	activeTetromino->RotateLeft();
+	Vec2<int> newPos = tetrominoPos +Vec2<int>{leftWallBump - rightWallBump, 0};
+	if (IsPositionValid(newPos, rotated, activeTetromino->GetDimension()))
+	{
+		tetrominoPos = newPos;
+		activeTetromino->RotateLeft();
+	}
+	
 
 }
 
@@ -64,10 +68,12 @@ void Board::RotateTetrominoRight()
 	int leftWallBump = CollideLeftWall(tetrominoPos, rotated, activeTetromino->GetDimension());
 	int rightWallBump = CollideRightWall(tetrominoPos, rotated, activeTetromino->GetDimension());
 
-	tetrominoPos += Vec2<int>{leftWallBump - rightWallBump, 0};
-
-	activeTetromino->RotateRight();
-
+	Vec2<int> newPos = tetrominoPos + Vec2<int>{leftWallBump - rightWallBump, 0};
+	if (IsPositionValid(newPos, rotated, activeTetromino->GetDimension()))
+	{
+		tetrominoPos = newPos;
+		activeTetromino->RotateRight();
+	}
 }
 
 //Checks if the given position is in bounds (TODO : make it check if the position doesn't contain a block either)
@@ -137,11 +143,39 @@ int Board::CollideRightWall(const Vec2<int>& pos, const std::vector<bool>& shape
 	return 0;
 }
 
+//Checks if the tetromino is within the board AND if the blocks it's in are not taken.
+bool Board::IsPositionValid(const Vec2<int>& pos, const std::vector<bool>& shape, int dimension) const
+{
+	if (IsWithinBoard(pos, shape, dimension))
+	{
+		//Check if the blocks are not taken
+		for (int y = 0; y < dimension; ++y)
+		{
+			for (int x = 0; x < dimension; ++x)
+			{
+				if (shape[y * dimension + x])
+				{
+					//Find the block in board coordinates
+					Vec2<int> boardPos{ pos.GetX() + x, pos.GetY() + y };
+					Block boardBlock = content[boardPos.GetY() * width + boardPos.GetX()];
+					//Check if it's empty
+					if (boardBlock.bExists)
+					{
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
 //Moves the tetromino by a delta but only if the move is possible
 void Board::MoveTetromino(const Vec2<int> delta)
 {
 	Vec2<int> newPos = tetrominoPos + delta;
-	if (IsWithinBoard(newPos, activeTetromino->GetCurrentShape(), activeTetromino->GetDimension()))
+	if (IsPositionValid(newPos, activeTetromino->GetCurrentShape(), activeTetromino->GetDimension()))
 	{
 		tetrominoPos += delta;
 	}
