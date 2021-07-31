@@ -1,5 +1,5 @@
 #include "Tetromino.h"
-
+#include <assert.h>
 Tetromino::Tetromino(int dimension, Color color, const bool* _shape)
 	:
 	color(color),
@@ -34,6 +34,18 @@ const std::vector<bool> Tetromino::GetRotatedRight() const
 		}
 	}
 	return copy;
+}
+
+bool Tetromino::ContainsBlock(Vec2<int> pos)
+{
+	assert(pos.GetX() >= 0 && pos.GetY() < dimension); //If assertion fails: pos is out of bounds
+	assert(pos.GetY() >= 0 && pos.GetY() < dimension);
+	return shape[pos.GetY() * dimension + pos.GetX()];
+}
+
+Color Tetromino::GetColor() const
+{
+	return color;
 }
 
 void Tetromino::RotateRight()

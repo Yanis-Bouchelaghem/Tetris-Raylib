@@ -44,7 +44,11 @@ void Game::Update()
 	if (timer <= 0.0f)
 	{
 		//Move the tetromino down
-		board.MoveTetromino({0,1});
+		if (!board.MoveTetromino({ 0,1 }))
+		{
+			//If the tetromino couldn't be moved, then it should be put
+			board.PutTetromino();
+		}
 		timer = delay;
 	}
 }

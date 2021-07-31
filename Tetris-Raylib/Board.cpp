@@ -76,10 +76,26 @@ void Board::RotateTetrominoRight()
 	}
 }
 
-//Checks if the given position is in bounds (TODO : make it check if the position doesn't contain a block either)
-bool Board::IsBlockAvailable(const Vec2<int>& pos) const
+void Board::PutTetromino()
 {
-	return (pos.GetX() >= 0 && pos.GetX() < width && pos.GetY() >= 0 && pos.GetY() < height);
+	//Put the tetromino into the board
+	for (int y = 0; y < activeTetromino->GetDimension(); ++y)
+	{
+		for (int x = 0; x < activeTetromino->GetDimension(); ++x)
+		{
+			if (activeTetromino->ContainsBlock({ x,y }))
+			{
+				putBlock(tetrominoPos.GetX() + x, tetrominoPos.GetY() + y, activeTetromino->GetColor());
+			}
+		}
+	}
+	NextTetromino();
+}
+
+void Board::NextTetromino()
+{
+	//TODO : Generate new shape
+	tetrominoPos = { width / 2,0 };
 }
 
 //Checks if the given shape fits in the given position without overlapping a wall
