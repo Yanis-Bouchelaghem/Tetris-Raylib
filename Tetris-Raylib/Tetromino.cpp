@@ -90,37 +90,37 @@ void Tetromino::Draw(const Vec2<int> screenPos, const int blockSize, const int b
 	}
 }
 
-Square::Square(Color color)
+Square::Square()
 	:
 	Tetromino(squareDimension,color, square)
 {}
 
-Jay::Jay(Color color)
+Jay::Jay()
 	:
 	Tetromino(jayDimension,color, jay)
 {}
 
-Elle::Elle(Color color)
+Elle::Elle()
 	:
 	Tetromino(elleDimension, color, elle)
 {}
 
-Ess::Ess(Color color)
+Ess::Ess()
 	:
 	Tetromino(essDimension, color, ess)
 {}
 
-Zed::Zed(Color color)
+Zed::Zed()
 	:
 	Tetromino(zedDimension, color, zed)
 {}
 
-Tee::Tee(Color color)
+Tee::Tee()
 	:
 	Tetromino(teeDimension, color, tee)
 {}
 
-Straight::Straight(Color color)
+Straight::Straight()
 	:
 	Tetromino(straightDimension, color, straight)
 {}
