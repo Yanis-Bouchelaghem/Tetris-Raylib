@@ -25,7 +25,9 @@ public:
 	void RotateTetrominoLeft();
 	void RotateTetrominoRight();
 	bool IsBlockAvailable(const Vec2<int>& pos) const;
-	bool IsPositionValid(const Vec2<int>& pos, const std::vector<bool>& shape, int dimension) const;
+	bool IsWithinBoard(const Vec2<int>& pos, const std::vector<bool>& shape, int dimension) const;
+	int CollideLeftWall(const Vec2<int>& pos, const std::vector<bool>& shape, int dimension) const;
+	int CollideRightWall(const Vec2<int>& pos, const std::vector<bool>& shape, int dimension) const;
 	void MoveTetromino(const Vec2<int> delta);
 	void Draw(Vec2<int> pos) const;
 	void Draw(int posX, int posY) const;

@@ -2,12 +2,13 @@
 #include "Board.h"
 #include "Rect.h"
 #include "PlayerController.h"
+#include <algorithm>
 //Creates a board with width * height blocks
 Board::Board(int _width, int _height)
 	:
 	width(_width),
 	height(_height),
-	activeTetromino(std::make_unique<Zed>(BLUE)),
+	activeTetromino(std::make_unique<Straight>(BLUE)),
 	tetrominoPos(_width/2 - activeTetromino->GetDimension()/2, 0)
 {
 	assert(_width > 0 && _height > 0); //If assertion fails : width or height is negative
@@ -47,19 +48,25 @@ void Board::RemoveBlock(int x, int y)
 
 void Board::RotateTetrominoLeft()
 {
-	if (IsPositionValid(tetrominoPos, activeTetromino->GetRotatedLeft(), activeTetromino->GetDimension()))
-	{
-		activeTetromino->RotateLeft();
-	}
+	auto rotated = activeTetromino->GetRotatedLeft();
+	int leftWallBump = CollideLeftWall(tetrominoPos,rotated, activeTetromino->GetDimension());
+	int rightWallBump = CollideRightWall(tetrominoPos, rotated, activeTetromino->GetDimension());
+
+	tetrominoPos += Vec2<int>{leftWallBump - rightWallBump, 0};
+
+	activeTetromino->RotateLeft();
 
 }
 
 void Board::RotateTetrominoRight()
 {
-	if (IsPositionValid(tetrominoPos, activeTetromino->GetRotatedRight(), activeTetromino->GetDimension()))
-	{
-		activeTetromino->RotateRight();
-	}
+	auto rotated = activeTetromino->GetRotatedRight();
+	int leftWallBump = CollideLeftWall(tetrominoPos, rotated, activeTetromino->GetDimension());
+	int rightWallBump = CollideRightWall(tetrominoPos, rotated, activeTetromino->GetDimension());
+
+	tetrominoPos += Vec2<int>{leftWallBump - rightWallBump, 0};
+
+	activeTetromino->RotateRight();
 
 }
 
@@ -69,14 +76,14 @@ bool Board::IsBlockAvailable(const Vec2<int>& pos) const
 	return (pos.GetX() >= 0 && pos.GetX() < width && pos.GetY() >= 0 && pos.GetY() < height);
 }
 
-//Checks if the given shape fits in the given position without overlapping a wall or existing blocks
-bool Board::IsPositionValid(const Vec2<int>& pos, const std::vector<bool>& shape, int dimension) const
+//Checks if the given shape fits in the given position without overlapping a wall
+bool Board::IsWithinBoard(const Vec2<int>& pos, const std::vector<bool>& shape, int dimension) const
 {
 	for (int y = 0; y < dimension; ++y)
 	{
 		for (int x = 0; x < dimension; ++x)
 		{
-			if (shape[y * dimension + x] && !IsBlockAvailable(pos + Vec2<int>{x,y}))
+			if (shape[y * dimension + x] && (pos.GetX() + x < 0 || pos.GetX() + x >= width))
 			{
 				return false;
 			}
@@ -85,11 +92,56 @@ bool Board::IsPositionValid(const Vec2<int>& pos, const std::vector<bool>& shape
 	return true;
 }
 
+//If the shape is outside of the left wall, returns the number of blocks necessarry to move the shape back into the board, otherwise returns 0
+int Board::CollideLeftWall(const Vec2<int>& pos, const std::vector<bool>& shape, int dimension) const
+{
+	for (int x = 0; x < dimension; ++x)
+	{
+		for (int y = 0; y < dimension; ++y)
+		{
+			if (shape[y * dimension + x])
+			{
+				if (pos.GetX() + x < 0)
+				{
+					return -(pos.GetX() + x);
+				}
+				else
+				{
+					return 0;
+				}
+			}
+		}
+	}
+	return 0;
+}
+//If the shape is outside of the right wall, returns the number of blocks necessarry to move the shape back into the board, otherwise returns 0
+int Board::CollideRightWall(const Vec2<int>& pos, const std::vector<bool>& shape, int dimension) const
+{
+	for (int x = dimension - 1; x >= 0; --x)
+	{
+		for (int y = dimension - 1; y >= 0; --y)
+		{
+			if (shape[y * dimension + x])
+			{
+				if (pos.GetX() + x >= width)
+				{
+					return pos.GetX() + x - (width-1) ;
+				}
+				else
+				{
+					return 0;
+				}
+			}
+		}
+	}
+	return 0;
+}
+
 //Moves the tetromino by a delta but only if the move is possible
 void Board::MoveTetromino(const Vec2<int> delta)
 {
 	Vec2<int> newPos = tetrominoPos + delta;
-	if (IsPositionValid(newPos, activeTetromino->GetCurrentShape(), activeTetromino->GetDimension()))
+	if (IsWithinBoard(newPos, activeTetromino->GetCurrentShape(), activeTetromino->GetDimension()))
 	{
 		tetrominoPos += delta;
 	}
