@@ -32,6 +32,7 @@ public:
 	bool IsPositionValid(const Vec2<int>& pos, const std::vector<bool>& shape, int dimension) const;
 	bool MoveTetromino(const Vec2<int> delta);
 	void DropTetromino();
+	void UpdatePrediction();
 
 	void Draw(Vec2<int> pos) const;
 	void Draw(int posX, int posY) const;
@@ -43,6 +44,7 @@ private:
 	const int width;
 	const int height;
 	Vec2<int> tetrominoPos;
+	Vec2<int> predictionPos;
 
 	static constexpr int blockSize = 25;
 	static constexpr int blockPadding = 2;

@@ -13,6 +13,7 @@ Board::Board(int _width, int _height)
 {
 	assert(_width > 0 && _height > 0); //If assertion fails : width or height is negative
 	content.resize(size_t(width*height));
+	UpdatePrediction();
 }
 
 void Board::putBlock(int x, int y, Color c)
@@ -43,8 +44,7 @@ void Board::RotateTetrominoLeft()
 		tetrominoPos = newPos;
 		activeTetromino->RotateLeft();
 	}
-	
-
+	UpdatePrediction();
 }
 
 void Board::RotateTetrominoRight()
@@ -59,6 +59,7 @@ void Board::RotateTetrominoRight()
 		tetrominoPos = newPos;
 		activeTetromino->RotateRight();
 	}
+	UpdatePrediction();
 }
 
 void Board::PutTetromino()
@@ -83,6 +84,7 @@ void Board::NextTetromino()
 	activeTetromino = Tetromino::RandomTetromino();
 
 	tetrominoPos = { width / 2 - activeTetromino->GetDimension() / 2,0 };
+	UpdatePrediction();
 }
 
 //Checks if the given shape fits in the given position without overlapping a wall
@@ -182,6 +184,7 @@ bool Board::MoveTetromino(const Vec2<int> delta)
 	if (IsPositionValid(newPos, activeTetromino->GetCurrentShape(), activeTetromino->GetDimension()))
 	{
 		tetrominoPos += delta;
+		UpdatePrediction();
 		return true;
 	}
 	return false;
@@ -192,6 +195,21 @@ void Board::DropTetromino()
 	//Keep going down until hitting the bottom or a block
 	while (MoveTetromino({ 0,1 }));
 	PutTetromino();
+}
+
+//Finds out where the current shape is going to land if hard dropped and updates the prediction's position
+void Board::UpdatePrediction()
+{
+	Vec2<int> tempPos{tetrominoPos};
+	auto shape = activeTetromino->GetCurrentShape();
+	int dimension = activeTetromino->GetDimension();
+	//Keep going down until hitting the bottom or a block
+	while (IsPositionValid({ tempPos.GetX(), tempPos.GetY() + 1 }, shape, dimension))
+	{
+		tempPos.SetY(tempPos.GetY() + 1);
+	}
+	//Update the prediction position
+	predictionPos = tempPos;
 }
 
 //Draws the whole board at the given position (the given position is the top-left of the board)
@@ -219,6 +237,8 @@ void Board::Draw(Vec2<int> screenPos) const
 
 	//Draw the active tetromino
 	activeTetromino->Draw(screenPos + (tetrominoPos * blockSize), blockSize, blockPadding);
+	//Draw the prediction
+	activeTetromino->Draw(screenPos + (predictionPos * blockSize), blockSize, blockPadding);
 }
 
 void Board::Draw(int posX, int posY) const
