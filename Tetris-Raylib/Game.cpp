@@ -11,8 +11,6 @@ Game::Game(int windowWidth, int windowHeight, std::string title)
 	InitWindow(windowWidth, windowHeight, title.c_str());
 	SetTargetFPS(targetFPS);
 
-	board.putBlock(7,3,RED);
-
 	//Bind the player controls
 	playerController.Bind(KEY_E, Context::running, KeyState::isKeyPressed, [=](float dt) {
 		board.RotateTetrominoRight();
@@ -34,6 +32,9 @@ Game::Game(int windowWidth, int windowHeight, std::string title)
 			board.PutTetromino();
 		}
 		timer = delay;
+	});
+	playerController.Bind(KEY_SPACE, Context::running, KeyState::isKeyPressed, [=](float dt) {
+		board.DropTetromino();
 	});
 }
 

@@ -187,6 +187,13 @@ bool Board::MoveTetromino(const Vec2<int> delta)
 	return false;
 }
 
+void Board::DropTetromino()
+{
+	//Keep going down until hitting the bottom or a block
+	while (MoveTetromino({ 0,1 }));
+	PutTetromino();
+}
+
 //Draws the whole board at the given position (the given position is the top-left of the board)
 void Board::Draw(Vec2<int> screenPos) const
 {

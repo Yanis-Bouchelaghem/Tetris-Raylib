@@ -31,6 +31,7 @@ public:
 	int CollideRightWall(const Vec2<int>& pos, const std::vector<bool>& shape, int dimension) const;
 	bool IsPositionValid(const Vec2<int>& pos, const std::vector<bool>& shape, int dimension) const;
 	bool MoveTetromino(const Vec2<int> delta);
+	void DropTetromino();
 
 	void Draw(Vec2<int> pos) const;
 	void Draw(int posX, int posY) const;
