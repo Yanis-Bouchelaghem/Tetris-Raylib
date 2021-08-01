@@ -236,9 +236,9 @@ void Board::Draw(Vec2<int> screenPos) const
 	}
 
 	//Draw the active tetromino
-	activeTetromino->Draw(screenPos + (tetrominoPos * blockSize), blockSize, blockPadding);
+	activeTetromino->Draw(screenPos + (tetrominoPos * blockSize), blockSize, blockPadding, false);
 	//Draw the prediction
-	activeTetromino->Draw(screenPos + (predictionPos * blockSize), blockSize, blockPadding);
+	activeTetromino->Draw(screenPos + (predictionPos * blockSize), blockSize, blockPadding, true);
 }
 
 void Board::Draw(int posX, int posY) const

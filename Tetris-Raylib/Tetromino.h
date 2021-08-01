@@ -15,7 +15,7 @@ public:
 	Color GetColor() const;
 	int GetDimension() const;
 	const std::vector<bool>& GetCurrentShape() const;
-	void Draw(const Vec2<int> screenPos, const int blockSize, const int blockPadding) const;
+	void Draw(const Vec2<int> screenPos, const int blockSize, const int blockPadding, bool edgesOnly) const;
 	static std::unique_ptr<Tetromino> RandomTetromino();
 
 	virtual ~Tetromino() noexcept = default;

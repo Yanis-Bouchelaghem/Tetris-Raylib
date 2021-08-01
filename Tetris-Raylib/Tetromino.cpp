@@ -69,7 +69,7 @@ const std::vector<bool>& Tetromino::GetCurrentShape() const
 }
 
 //Draws the tetromino at the given screenPos with the given block size and padding.
-void Tetromino::Draw(const Vec2<int> screenPos, const int blockSize, const int blockPadding) const
+void Tetromino::Draw(const Vec2<int> screenPos, const int blockSize, const int blockPadding, bool edgesOnly) const
 {
 	for (int y = 0; y < dimension; ++y)
 	{
@@ -81,10 +81,19 @@ void Tetromino::Draw(const Vec2<int> screenPos, const int blockSize, const int b
 				Vec2<int> blockTopLeft{x* blockSize, y* blockSize};
 				//Add the screen position and the padding to it
 				blockTopLeft += screenPos + blockPadding;
-
-				rayCpp::DrawRectangle(blockTopLeft,
-									  Vec2<int>{blockSize,blockSize} - blockPadding,
-									  color);
+				if (edgesOnly)
+				{
+					rayCpp::DrawRectangleLinesEx({blockTopLeft,Vec2<int>(blockSize,blockSize) - blockPadding},
+						blockPadding,
+						color);
+				}
+				else
+				{
+					rayCpp::DrawRectangle(blockTopLeft,
+						Vec2<int>{blockSize, blockSize} - blockPadding,
+						color);
+				}
+				
 			}
 		}
 	}
