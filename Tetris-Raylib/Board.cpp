@@ -190,6 +190,33 @@ bool Board::MoveTetromino(const Vec2<int> delta)
 	return false;
 }
 
+int Board::ClearCompletedLines()
+{
+	int linesCleared = 0;
+	for (int y = 0; y < height; ++y)
+	{
+		//Check if the line is completed
+		auto iterator = content.begin() + (y * width);
+		bool completed = std::all_of(iterator, iterator + width, [](const Block& block){
+			return block.bExists;
+			});
+
+		if (completed)
+		{
+			//Shift down every line above this one
+			for (int line = y - 1; line >= 0; --line)
+			{
+				for (int x = 0; x < width; ++x)
+				{
+					content[(line + 1) * width + x] = content[line * width + x];
+				}
+			}
+			++linesCleared;
+		}
+	}
+	return linesCleared;
+}
+
 void Board::DropTetromino()
 {
 	//Keep going down until hitting the bottom or a block

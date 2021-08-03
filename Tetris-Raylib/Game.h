@@ -19,7 +19,7 @@ private:
 	Board board;
 
 	//The time it takes for the piece to move down (in seconds)
-	float delay = 0.3f;
+	float delay = 0.4f;
 	float timer = delay;
 	//The amount by which the delay is reduced every tetromino landing (in seconds)
 	static constexpr float drain = 0.01f;

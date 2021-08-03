@@ -30,11 +30,13 @@ Game::Game(int windowWidth, int windowHeight, std::string title)
 		{
 			//If the tetromino couldn't be moved, then it should be put
 			board.PutTetromino();
+			board.ClearCompletedLines();
 		}
 		timer = delay;
 	});
 	playerController.Bind(KEY_SPACE, Context::running, KeyState::isKeyPressed, [=](float dt) {
 		board.DropTetromino();
+		board.ClearCompletedLines();
 	});
 }
 
@@ -72,6 +74,7 @@ void Game::Update()
 		{
 			//If the tetromino couldn't be moved, then it should be put
 			board.PutTetromino();
+			board.ClearCompletedLines();
 		}
 		timer = delay;
 	}
