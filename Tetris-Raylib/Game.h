@@ -17,7 +17,9 @@ private:
 private:
 	/////////// Member variables go here ///////////
 	Board board;
-
+	int score;
+	//The amount of score added after each completed line
+	static constexpr int lineScore = 250;
 	//The time it takes for the piece to move down (in seconds)
 	float delay = 0.4f;
 	float timer = delay;

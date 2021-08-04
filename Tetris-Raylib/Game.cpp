@@ -10,7 +10,7 @@ Game::Game(int windowWidth, int windowHeight, std::string title)
 	assert(!IsWindowReady()); //If assertion fails : A window already exists
 	InitWindow(windowWidth, windowHeight, title.c_str());
 	SetTargetFPS(targetFPS);
-
+	score = 0;
 	//Bind the player controls
 	playerController.Bind(KEY_E, Context::running, KeyState::isKeyPressed, [=](float dt) {
 		board.RotateTetrominoRight();
@@ -30,13 +30,13 @@ Game::Game(int windowWidth, int windowHeight, std::string title)
 		{
 			//If the tetromino couldn't be moved, then it should be put
 			board.PutTetromino();
-			board.ClearCompletedLines();
+			score += board.ClearCompletedLines() * lineScore + 5;
 		}
 		timer = delay;
 	});
 	playerController.Bind(KEY_SPACE, Context::running, KeyState::isKeyPressed, [=](float dt) {
 		board.DropTetromino();
-		board.ClearCompletedLines();
+		score += board.ClearCompletedLines() * lineScore + 10;
 	});
 }
 
@@ -74,7 +74,7 @@ void Game::Update()
 		{
 			//If the tetromino couldn't be moved, then it should be put
 			board.PutTetromino();
-			board.ClearCompletedLines();
+			score += board.ClearCompletedLines() * lineScore + 5;
 		}
 		timer = delay;
 	}
@@ -85,4 +85,7 @@ void Game::Render()
 {
 	ClearBackground(BLACK);
 	board.Draw({150,50});
+	rayCpp::DrawText("Next tetromino :", {450,100}, 30, RAYWHITE);
+	rayCpp::DrawText("Score :", {450, 350}, 30, RAYWHITE);
+	rayCpp::DrawText(TextFormat("%d", score), {450, 400}, 50, RAYWHITE);
 }
