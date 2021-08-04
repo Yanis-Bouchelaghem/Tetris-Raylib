@@ -2,6 +2,7 @@
 #include <string>
 #include "Board.h"
 #include "PlayerController.h"
+#include <memory>
 class Game //Takes care of setting up the game window and managing the game loop.
 {
 public:

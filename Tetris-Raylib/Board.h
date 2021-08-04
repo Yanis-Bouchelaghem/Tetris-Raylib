@@ -32,6 +32,7 @@ public:
 	bool IsPositionValid(const Vec2<int>& pos, const std::vector<bool>& shape, int dimension) const;
 	bool MoveTetromino(const Vec2<int> delta);
 	bool IsLost() const;
+	Tetromino& GetNextTetromino() const;
 	int ClearCompletedLines();
 	void DropTetromino();
 	void UpdatePrediction();
@@ -43,6 +44,7 @@ public:
 private:
 	std::vector<Block> content;
 	std::unique_ptr<Tetromino> activeTetromino;
+	std::unique_ptr<Tetromino> nextTetromino;
 	const int width;
 	const int height;
 	Vec2<int> tetrominoPos;

@@ -9,6 +9,7 @@ Board::Board(int _width, int _height)
 	width(_width),
 	height(_height),
 	activeTetromino(Tetromino::RandomTetromino()),
+	nextTetromino(Tetromino::RandomTetromino()),
 	tetrominoPos(_width/2 - activeTetromino->GetDimension()/2, 0)
 {
 	assert(_width > 0 && _height > 0); //If assertion fails : width or height is negative
@@ -81,8 +82,8 @@ void Board::PutTetromino()
 void Board::NextTetromino()
 {
 	//TODO : Generate new shape
-	activeTetromino = Tetromino::RandomTetromino();
-
+	activeTetromino = std::move(nextTetromino);
+	nextTetromino = Tetromino::RandomTetromino();
 	tetrominoPos = { width / 2 - activeTetromino->GetDimension() / 2,0 };
 	UpdatePrediction();
 }
@@ -194,6 +195,11 @@ bool Board::MoveTetromino(const Vec2<int> delta)
 bool Board::IsLost() const
 {
 	return std::any_of(content.begin(), content.begin() + width*2,[](const Block& block){return block.bExists;});
+}
+
+Tetromino& Board::GetNextTetromino() const
+{
+	return *nextTetromino;
 }
 
 int Board::ClearCompletedLines()

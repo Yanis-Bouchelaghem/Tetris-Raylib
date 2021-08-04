@@ -12,6 +12,7 @@ Game::Game(int windowWidth, int windowHeight, std::string title)
 	SetTargetFPS(targetFPS);
 	state = Context::running;
 	score = 0;
+
 	//Bind the player controls
 	playerController.Bind(KEY_E, Context::running, KeyState::isKeyPressed, [=](float dt) {
 		board.RotateTetrominoRight();
@@ -103,6 +104,7 @@ void Game::Render()
 	ClearBackground(BLACK);
 	board.Draw({ 150,50 });
 	rayCpp::DrawText("Next tetromino :", { 450,100 }, 30, RAYWHITE);
+	board.GetNextTetromino().Draw({520,180},35,2,false);
 	if (state == Context::running)
 	{
 		rayCpp::DrawText("Score :", { 450, 350 }, 30, RAYWHITE);
