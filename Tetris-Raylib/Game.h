@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "Board.h"
+#include "PlayerController.h"
 class Game //Takes care of setting up the game window and managing the game loop.
 {
 public:
@@ -18,6 +19,7 @@ private:
 	/////////// Member variables go here ///////////
 	Board board;
 	int score;
+	Context state;
 	//The amount of score added after each completed line
 	static constexpr int lineScore = 250;
 	//The time it takes for the piece to move down (in seconds)

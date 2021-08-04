@@ -1,7 +1,7 @@
 #include <assert.h>
 #include "RaylibCpp.h"
 #include "Game.h"
-#include "PlayerController.h"
+
 
 Game::Game(int windowWidth, int windowHeight, std::string title)
 	:
@@ -10,6 +10,7 @@ Game::Game(int windowWidth, int windowHeight, std::string title)
 	assert(!IsWindowReady()); //If assertion fails : A window already exists
 	InitWindow(windowWidth, windowHeight, title.c_str());
 	SetTargetFPS(targetFPS);
+	state = Context::running;
 	score = 0;
 	//Bind the player controls
 	playerController.Bind(KEY_E, Context::running, KeyState::isKeyPressed, [=](float dt) {
@@ -31,12 +32,21 @@ Game::Game(int windowWidth, int windowHeight, std::string title)
 			//If the tetromino couldn't be moved, then it should be put
 			board.PutTetromino();
 			score += board.ClearCompletedLines() * lineScore + 5;
+			if (board.IsLost())
+			{
+				state = Context::gameOver;
+			}
 		}
 		timer = delay;
 	});
 	playerController.Bind(KEY_SPACE, Context::running, KeyState::isKeyPressed, [=](float dt) {
 		board.DropTetromino();
 		score += board.ClearCompletedLines() * lineScore + 10;
+		score += board.ClearCompletedLines() * lineScore + 5;
+		if (board.IsLost())
+		{
+			state = Context::gameOver;
+		}
 	});
 }
 
@@ -63,20 +73,27 @@ void Game::Tick()
 //Game logic goes here
 void Game::Update()	
 {
-	const float dt = GetFrameTime();
-	playerController.HandleInput(Context::running, dt);
-
-	timer -= dt;
-	if (timer <= 0.0f)
+	if (state == Context::running)
 	{
-		//Move the tetromino down
-		if (!board.MoveTetromino({ 0,1 }))
+		const float dt = GetFrameTime();
+		playerController.HandleInput(Context::running, dt);
+
+		timer -= dt;
+		if (timer <= 0.0f)
 		{
-			//If the tetromino couldn't be moved, then it should be put
-			board.PutTetromino();
-			score += board.ClearCompletedLines() * lineScore + 5;
+			//Move the tetromino down
+			if (!board.MoveTetromino({ 0,1 }))
+			{
+				//If the tetromino couldn't be moved, then it should be put
+				board.PutTetromino();
+				score += board.ClearCompletedLines() * lineScore + 5;
+				if (board.IsLost())
+				{
+					state = Context::gameOver;
+				}
+			}
+			timer = delay;
 		}
-		timer = delay;
 	}
 }
 
@@ -84,8 +101,19 @@ void Game::Update()
 void Game::Render() 
 {
 	ClearBackground(BLACK);
-	board.Draw({150,50});
-	rayCpp::DrawText("Next tetromino :", {450,100}, 30, RAYWHITE);
-	rayCpp::DrawText("Score :", {450, 350}, 30, RAYWHITE);
-	rayCpp::DrawText(TextFormat("%d", score), {450, 400}, 50, RAYWHITE);
+	board.Draw({ 150,50 });
+	rayCpp::DrawText("Next tetromino :", { 450,100 }, 30, RAYWHITE);
+	if (state == Context::running)
+	{
+		rayCpp::DrawText("Score :", { 450, 350 }, 30, RAYWHITE);
+		rayCpp::DrawText(TextFormat("%d", score), { 450, 400 }, 50, RAYWHITE);
+	}
+	else
+	{
+		rayCpp::DrawRectangle({0,0},{GetScreenWidth(),GetScreenHeight()},{0,0,0,190});
+		rayCpp::DrawText("GAME OVER", { GetScreenWidth() / 2 - 155, GetScreenHeight() / 2 - 150 }, 50, RAYWHITE);
+		rayCpp::DrawText("Score :", { GetScreenWidth()/2 - 50, GetScreenHeight()/2 - 50}, 30, RAYWHITE);
+		rayCpp::DrawText(TextFormat("%d", score), { GetScreenWidth()/2 - 50, GetScreenHeight()/2}, 50, RAYWHITE);
+	}
+
 }

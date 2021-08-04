@@ -190,6 +190,12 @@ bool Board::MoveTetromino(const Vec2<int> delta)
 	return false;
 }
 
+//If one of the top 2 lines contain a block, then the game is lost.
+bool Board::IsLost() const
+{
+	return std::any_of(content.begin(), content.begin() + width*2,[](const Block& block){return block.bExists;});
+}
+
 int Board::ClearCompletedLines()
 {
 	int linesCleared = 0;
