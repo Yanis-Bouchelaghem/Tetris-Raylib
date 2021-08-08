@@ -229,6 +229,25 @@ int Board::ClearCompletedLines()
 	return linesCleared;
 }
 
+int Board::ClearCompletedLinesNew()
+{
+	int y1 = tileHeight - 1;
+	for (int y = tileHeight - 1; y > 0; --y)
+	{
+		int count = 0;
+		for (int x = 0; x < tileWidth; ++x)
+		{
+			if (field[y][x])
+				++count;
+
+			field[y1][x] = field[y][x];
+		}
+
+		if (count < tileWidth)
+			--y1;
+	}
+}
+
 void Board::DropTetromino()
 {
 	//Keep going down until hitting the bottom or a block

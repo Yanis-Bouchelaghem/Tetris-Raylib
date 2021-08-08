@@ -34,6 +34,7 @@ public:
 	bool IsLost() const;
 	Tetromino& GetNextTetromino() const;
 	int ClearCompletedLines();
+	int ClearCompletedLinesNew();
 	void DropTetromino();
 	void UpdatePrediction();
 
